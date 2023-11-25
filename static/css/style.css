@@ -1,0 +1,54 @@
+
+/* Optional: Style the button as needed */
+.hidden-button {
+    background: none;
+    border: none;
+    color: blue; /* Adjust the color as needed */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hidden-form-checkbox {
+    display: none; /* Hide the checkbox */
+}
+
+.hidden-form-label {
+    cursor: pointer; /* Set cursor to pointer to indicate it's clickable */
+}
+
+/* Optional: Style the label as needed */
+.hidden-form-label {
+    background: none;
+    border: none;
+    color: blue; /* Adjust the color as needed */
+    text-decoration: underline;
+}
+
+
+
+#todo-list, #done-list, #doing-list {
+    background-color: #776B5D
+}
+
+.to-do-header, #todo-btn {
+    background-color: #F3B664;
+    color: #ffffff
+}
+
+.doing-header, #doing-btn {
+    background-color: #F4CE14;
+    color: #ffffff
+}
+
+.done-header {
+    background-color: #9FBB73;
+    color: #ffffff
+}
+
+body {
+    background-color: #F3EEEA
+}
+
+#available-lists li a , #available-lists li form{
+    display: inline
+}

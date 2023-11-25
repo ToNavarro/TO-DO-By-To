@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>To Do Lists</title>
+</head>
+<body>
+  <!-- navbar section -->
+  <header data-bs-theme="dark">
+    <div class="text-bg-dark collapse show" id="navbarHeader" style="">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-md-7 py-4">
+            <h4>Lists</h4>
+            <ul class="list-unstyled" id="available-lists">
+                {% for list in lists %}
+                <li>
+                    <a href="{{ url_for('home', list_name=list) }}" class="text-white">{{ list }}</a>
+                    <form method="post" action="/delete_list" id="hidden-form-del-list-{{ list }}" >
+                        <input type="hidden" name="list_name" value="{{ list }}">
+                        <button type="submit" class="hidden-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </button>
+                    </form>
+                </li>
+                {% endfor %}
+                <li>
+                    <button type="button" class="hidden-button" data-bs-toggle="modal" data-bs-target="#addListModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        </svg>
+                    </button>
+
+                </li>
+            </ul>
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <h4>Contact</h4>
+            <ul class="list-unstyled">
+              <li>
+                  <a href="https://github.com/ToNavarro" class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                    </svg> GitHub
+                  </a>
+              </li>
+              <li>
+                  <a href="https://www.tiktok.com/@topythoneer" class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tiktok" viewBox="0 0 16 16">
+                      <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+                    </svg> Tik Tok
+                  </a>
+              </li>
+              <li>
+                  <a href="www.linkedin.com/in/tomas-navarro-470437283" class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401m-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4"/>
+                    </svg> Linkedin
+                  </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <a href="{{ url_for('home') }}" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+            </svg> <strong>TO DO By To</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="true" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- end navbar section -->
+
+  <!-- lists section -->
+  <div class="container">
+   <div class="row row-cols-1">
+     <div class="col">
+       <h2>{{ current_list }}</h2>
+     </div>
+   </div>
+  </div>
+  <div class="container mt-4">
+    <div class="row h-100">
+        <div class="col-md-4 d-flex flex-column">
+            <div class="card flex-grow-1 ">
+                <div class="card-header to-do-header text-white">
+                    To Do
+                </div>
+                <ul class="list-group list-group-flush" id="todo-list">
+                    {% for todo in todos %}
+                    {% if todo.condition == "to_do" and todo.list_name == current_list.replace(" ", "_") %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ todo.text }}
+                        <div class="d-flex">
+
+                            <!-- Right Arrow SVG -->
+                            <form method="post" action="/move" id="hidden-form-up-{{ todo.condition }}-{{ todo.id }}" > <!-- class="hidden-form" -->
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="condition" value="{{ todo.condition }}">
+                                <input type="hidden" name="way" value="up">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-circle" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+                            <!-- Trash SVG -->
+                            <form method="post" action="/delete_item" id="hidden-form-del-{{ todo.id }}" > <!-- class="hidden-form" -->
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <!-- No text for the last item in the list -->
+                        <div></div>
+                        <div class="d-flex">
+                            <!-- Circular button with addition sign (Replace with your actual SVG or icon) -->
+
+                            <button type="button" class="btn rounded-circle" id="todo-btn" data-bs-toggle="modal" data-bs-target="#addTodoModal">
+                                +
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4 d-flex flex-column">
+            <div class="card flex-grow-1">
+                <div class="card-header doing-header text-white">
+                    Doing
+                </div>
+                <ul class="list-group list-group-flush" id="doing-list">
+                    {% for todo in todos %}
+                    {% if todo.condition == "doing" and todo.list_name == current_list.replace(" ", "_") %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ todo.text }}
+                        <div class="d-flex">
+                            <!-- Left Arrow SVG -->
+                            <form method="post" action="/move" id="hidden-form-down-{{ todo.condition }}-{{ todo.id }}">
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="condition" value="{{ todo.condition }}">
+                                <input type="hidden" name="way" value="down">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-left-circle" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-5.904-2.854a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+                            <!-- Right Arrow SVG -->
+                            <form method="post" action="/move" id="hidden-form-up-{{ todo.condition }}-{{ todo.id }}">
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="condition" value="{{ todo.condition }}">
+                                <input type="hidden" name="way" value="up">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right-circle" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+
+                            <!-- Trash SVG -->
+                            <form method="post" action="/delete_item" id="hidden-form-del-{{ todo.id }}" > <!-- class="hidden-form" -->
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <!-- No text for the last item in the list -->
+                        <div></div>
+                        <div class="d-flex">
+                            <!-- Circular button with addition sign (Replace with your actual SVG or icon) -->
+                            <button type="button" class="btn rounded-circle" id="doing-btn" data-bs-toggle="modal" data-bs-target="#addDoingModal">
+                                <strong>+</strong>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4 d-flex flex-column">
+            <div class="card flex-grow-1">
+                <div class="card-header done-header text-white">
+                    Done
+                </div>
+                <ul class="list-group list-group-flush" id="done-list">
+                    {% for todo in todos %}
+                    {% if todo.condition == "done" and todo.list_name == current_list.replace(" ", "_") %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ todo.text }}
+                        <div class="d-flex">
+                            <!-- Left Arrow SVG -->
+                            <form method="post" action="/move" id="hidden-form-down-{{ todo.condition }}-{{ todo.id }}">
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="condition" value="{{ todo.condition }}">
+                                <input type="hidden" name="way" value="down">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-left-circle" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-5.904-2.854a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+                            <!-- Trash SVG -->
+                            <form method="post" action="/delete_item" id="hidden-form-del-{{ todo.id }}" > <!-- class="hidden-form" -->
+                                <input type="hidden" name="item_id" value="{{ todo.id }}">
+                                <input type="hidden" name="list_name" value="{{ todo.list_name }}">
+                                <button type="submit" class="hidden-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <!-- No text for the last item in the list -->
+                        <div></div>
+                        <div class="d-flex">
+                            <!-- Circular button with addition sign (Replace with your actual SVG or icon) -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- end lists section -->
+
+  <!-- Bootstrap modals for adding a new items -->
+    <!-- To Do modal -->
+    <div class="modal fade" id="addTodoModal" tabindex="-1" aria-labelledby="addTodoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTodoModalLabel">Add New To-Do Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/add_item" id="add-to-do">
+                        <div class="mb-3">
+                            <label for="todoText" class="form-label">To-Do Text</label>
+                            <input type="text" name="text" class="form-control" id="todoText" required maxlength="250">
+                        </div>
+                        <div class="mb-3">
+                            <label for="todoDate" class="form-label">Select Date</label>
+                            <input type="text" name="date" class="form-control" id="todoDate" data-provide="datepicker" required>
+                        </div>
+                        <input type="hidden" name="list_name" value="{{ current_list }}">
+                        <input type="hidden" name="condition" value="to_do">
+                        <button type="submit" class="btn btn-primary">Add To-Do</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Doing modal -->
+    <div class="modal fade" id="addDoingModal" tabindex="-1" aria-labelledby="addDoingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDoingModalLabel">Add New Doing Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/add_item" id="add-doing">
+                        <div class="mb-3">
+                            <label for="doingText" class="form-label">Doing Text</label>
+                            <input type="text" name="text" class="form-control" id="doingText" required maxlength="250">
+                        </div>
+                        <div class="mb-3">
+                            <label for="doingDate" class="form-label">Select Date</label>
+                            <input type="text" name="date" class="form-control" id="doingDate" data-provide="datepicker" required>
+                        </div>
+                        <input type="hidden" name="list_name" value="{{ current_list }}">
+                        <input type="hidden" name="condition" value="doing">
+                        <button type="submit" class="btn btn-primary">Add Doing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New List modal -->
+    <div class="modal fade" id="addListModal" tabindex="-1" aria-labelledby="addListModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addListModalLabel">Add New List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/add_list" id="add-list">
+                        <div class="mb-3">
+                            <label for="listName" class="form-label">List Name</label>
+                            <input type="text" name="list_name" class="form-control" id="listName" maxlength="100" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add List</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- footer section -->
+
+  <!-- end footer section -->
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- Initialize the Datepicker -->
+    <script>
+        $(document).ready(function () {
+            // Initialize the Datepicker for all elements with the class 'datepicker'
+            $('.todoDate').datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true,
+                beforeShow: function (input, inst) {
+                    // Position the datepicker near the clicked calendar SVG
+                    var rect = input.getBoundingClientRect();
+                    setTimeout(function () {
+                        inst.dpDiv.css({ top: rect.bottom, left: rect.left });
+                    }, 0);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
